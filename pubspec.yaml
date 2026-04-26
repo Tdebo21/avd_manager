@@ -1,0 +1,26 @@
+name: avd_manager
+description: 
+  A lightweight CLI tool to create, patch, launch, delete, list, sort, and filter Android Virtual Devices (AVDs).
+  Like Android Studio's AVD Manager, but in your terminal.
+
+version: 1.0.0
+
+# author: Tdebo21 
+repository: https://github.com/Tdebo21/avd_manager
+homepage: https://Tdebo21.github.io/avd_manager 
+issue_tracker: https://github.com/Tdebo21/avd_manager/issues
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  process_run: ^1.0.1
+  path: ^1.9.0
+  args: ^2.5.0
+
+executables:
+  avdm: avdm # Refers to bin/avdm.dart
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.24.0

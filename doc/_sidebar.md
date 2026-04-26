@@ -1,0 +1,7 @@
+- Getting Started
+  - [Home](README.md)
+- Commands
+  - [List AVDs](commands/list.md)
+  - [Create AVD](commands/create.md)
+  - [Launch AVD](commands/launch.md)
+  - [Delete AVD](commands/delete.md)
