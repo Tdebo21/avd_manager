@@ -130,6 +130,16 @@ void main(List<String> args) async {
 void _printUsage(ArgParser parser) {
   print('''AVDM - Lightweight Android AVD Manager CLI
 ${usage(parser)}
+Commands:
+  avdm create <avd_name> [--device="Pixel 2"] [--api=30]    Create and patch an AVD
+  avdm list                                                 List all AVDs
+  avdm delete <avd_name>                                    Delete an AVD
+
+Examples:
+  avdm create Slim_API30 --api=30
+  avdm create TestDevice --device="Nexus 4" --api=29
+  avdm delete Slim_API30
+
 
 Use "avdm <command> --help" for command-specific usage.
 ''');
