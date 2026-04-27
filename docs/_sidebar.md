@@ -5,3 +5,6 @@
   - [Create AVD](commands/create.md)
   - [Launch AVD](commands/launch.md)
   - [Delete AVD](commands/delete.md)
+  - **Links**
+  - [![GitHub](https://img.shields.io/badge/GitHub-avd_manager-blue)](https://github.com/Tdebo21/avd_manager)
+  - [![Pub.dev](https://img.shields.io/badge/Pub.dev-avd_manager-blue)](https://pub.dev/packages/avd_manager)

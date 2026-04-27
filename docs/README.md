@@ -1,10 +1,16 @@
 # 📱 avdm - AVD Manager CLI
 
-A lightweight tool to create, patch, delete, and launch Android Virtual Devices (AVDs) from the terminal.
+A lightweight DART CLI tool for managing Android Virtual Devices with ease.
 
-## 🚀 Getting Started
+## Features
 
-# Install from pub.dev
+- ✨ Create and manage AVDs programmatically
+- 🚀 List available AVDs and their sizes
+- 🔧 Launch AVDs with custom options
+- 📋 Delete and clean up unused AVDs
+- 🎯 Cross-platform support (macOS, Windows, Linux)
+
+## Quick Start
 
 ### Prerequisites
 
@@ -50,10 +56,38 @@ avdm --version
 
 ## 🛠 Available Commands
 
-- `avdm list` – Show available AVDs
-- `avdm create` – Create a new AVD
-- `avdm launch` – Start a virtual device
-- `avdm delete` – Remove an AVD
-- `avdm --help` - Get help
+See the sidebar for detailed command documentation.
 
-See full command docs in the sidebar.
+- **[list](commands/list.md)** – Show available AVDs
+- **[create](commands/create.md)** – Create a new AVD
+- **[launch](commands/launch.md)** – Start a virtual device
+- **[delete](commands/delete.md)** – Remove an AVD
+
+## License
+
+MIT License - See [LICENSE](https://github.com/Tdebo21/avd_manager/blob/main/LICENSE)
+
+## Usage
+
+```bash
+avdm list [options]
+```
+
+## Options
+
+- `--sort [size|name]` - Sort AVDs by size or name
+- `--min-size <size>` - Only show AVDs larger than this size (e.g., 500MB, 1GB)
+- `-h, --help` - Show help information
+
+## Examples
+
+```bash
+# List all AVDs
+avdm list
+
+# Sort by name
+avdm list --sort name
+
+# Filter by minimum size
+avdm list --min-size 1GB
+```
