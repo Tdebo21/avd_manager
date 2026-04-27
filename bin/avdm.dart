@@ -10,6 +10,7 @@ void main(List<String> args) async {
     ..addFlag('help', abbr: 'h', negatable: false, help: 'Show create usage')
     ..addOption('device', help: 'Device name (e.g. "pixel")')
     ..addOption('api', help: 'API level (e.g. 28)')
+    ..addOption('name', help: 'AVD name')
     ..addOption('abi',
         help: 'ABI for the system image (e.g. x86, x86_64, arm64-v8a)');
 
@@ -33,8 +34,10 @@ void main(List<String> args) async {
     ..addOption('min-size',
         help: 'Only show AVDs larger than this size (e.g. 500MB, 1GB)');
 
+  // ADD VERSION FLAG TO MAIN PARSER
   final parser = ArgParser()
     ..addFlag('help', abbr: 'h', negatable: false, help: 'Show usage')
+    ..addFlag('version', negatable: false, help: 'Show version information')
     ..addCommand('create', createParser)
     ..addCommand('launch', launchParser)
     ..addCommand('delete', deleteParser)
@@ -46,7 +49,13 @@ void main(List<String> args) async {
   } catch (e) {
     print('❌ Error: ${e.toString()}');
     _printUsage(parser);
-    exit(64); // Exit code 64 indicates a usage error
+    exit(64);
+  }
+
+  // Handle --version flag FIRST (before checking other flags)
+  if (results['version'] as bool) {
+    print('avd_manager version 1.0.0');
+    return;
   }
 
   if (results['help'] as bool) {
@@ -54,11 +63,24 @@ void main(List<String> args) async {
     return;
   }
 
-  if (results.command == null) {
-    _printUsage(parser);
+  final command = results.command;
+  if (command == null) {
+    print('No command provided. Use --help for usage information.');
     return;
   }
 
+  // Handle --help flag
+  if (results['help'] as bool) {
+    print('AVD Manager - Manage Android Virtual Devices');
+    print('');
+    print('Usage: avdm <command> [arguments]');
+    print('');
+    print('Global options:');
+    print(parser.usage);
+    return;
+  }
+
+  // Handle commands
   switch (results.command!.name) {
     case 'launch':
       final cmd = results.command!;
@@ -106,6 +128,13 @@ void main(List<String> args) async {
         print('Usage: avdm delete <avd_name>');
         return;
       }
+      // confirm deletion
+      stdout.write('Are you sure you want to delete AVD "$name"? (y/N) ');
+      final confirm = stdin.readLineSync();
+      if (confirm == null || confirm.toLowerCase() != 'y') {
+        print('Deletion cancelled.');
+        return;
+      }
       await deleteAvd(name);
       break;
     case 'list':
@@ -116,6 +145,7 @@ void main(List<String> args) async {
       }
       final sortBy = cmd['sort'] ?? 'name';
       final minSizeStr = cmd['min-size'] ?? '0';
+
       await listAvds({
         'sort': sortBy,
         'min-size': minSizeStr,
@@ -134,11 +164,13 @@ Commands:
   avdm create <avd_name> [--device="Pixel 2"] [--api=30]    Create and patch an AVD
   avdm list                                                 List all AVDs
   avdm delete <avd_name>                                    Delete an AVD
+  avdm launch <avd_name> [options]                          Launch an AVD with optional flags
 
 Examples:
   avdm create Slim_API30 --api=30
   avdm create TestDevice --device="Nexus 4" --api=29
   avdm delete Slim_API30
+  avdm launch TestDevice --wipe-data --no-boot-anim
 
 
 Use "avdm <command> --help" for command-specific usage.

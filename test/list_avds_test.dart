@@ -5,7 +5,6 @@ import 'package:args/command_runner.dart';
 import 'package:avd_manager/commands/list.dart';
 import 'dart:async';
 
-
 class ListCommand extends Command {
   @override
   final name = 'list';
@@ -56,7 +55,7 @@ void main() {
       expect(() => parseSize('0'), throwsA(isA<FormatException>()));
       expect(() => parseSize('-100MB'), throwsA(isA<FormatException>()));
     });
-    
+
     test('throws on invalid unit', () {
       expect(() => parseSize('100Z'), throwsA(isA<FormatException>()));
     });
@@ -64,7 +63,6 @@ void main() {
     test('throws on empty string', () {
       expect(() => parseSize(''), throwsA(isA<FormatException>()));
     });
-    
   });
   group('formatSize', () {
     test('formats size in GB', () {
@@ -76,4 +74,3 @@ void main() {
     });
   });
 }
-

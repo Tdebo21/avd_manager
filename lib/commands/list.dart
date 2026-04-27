@@ -111,12 +111,33 @@ Future<void> listAvds(Map<String, String> cmd) async {
   // Extract command-line arguments
   final sortBy = cmd['sort'] ?? 'name';
   final minSizeStr = cmd['min-size'] ?? '0';
+  final nameStr = cmd['name'] ?? 'list';
 
   // Skip size filtering if 'min-size' is '0'
   if (minSizeStr != '0' && minSizeStr.isNotEmpty) {
     try {
       final minBytes = parseSize(minSizeStr);
-      avdData.removeWhere((avd) => avd.size < minBytes);
+      avdData.removeWhere((avd) => avd.size <= minBytes);
+      final remainingCount = avdData.length;
+      if (remainingCount == 0) {
+        print(
+            'No AVDs found with size greater than ${minSizeStr.toUpperCase()}');
+        return;
+      } else {
+        print(
+            'Found $remainingCount AVD(s) with size greater than ${minSizeStr.toUpperCase()}:');
+      }
+      //sort list avds by name
+      if (nameStr == 'list') {
+        avdData.sort(
+            (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+      } else if (nameStr == 'size') {
+        avdData.sort((a, b) => a.size.compareTo(b.size));
+      } else {
+        print('Invalid sort option: $nameStr. Defaulting to sorting by name.');
+        avdData.sort(
+            (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+      }
     } catch (e) {
       print(
           '❌ Invalid size format: $minSizeStr. Use formats like 500MB or 1GB.');
@@ -128,7 +149,8 @@ Future<void> listAvds(Map<String, String> cmd) async {
   if (sortBy == 'size') {
     avdData.sort((a, b) => a.size.compareTo(b.size));
   } else if (sortBy == 'name') {
-    avdData.sort((a, b) => a.name.compareTo(b.name));
+    avdData
+        .sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
   }
 
   // Loop and print the sorted AVD data

@@ -17,6 +17,7 @@ dependencies:
   process_run: ^1.0.1
   path: ^1.9.0
   args: ^2.5.0
+  
 
 executables:
   avdm: avdm # Refers to bin/avdm.dart

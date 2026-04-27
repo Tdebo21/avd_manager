@@ -6,9 +6,9 @@ Future<List<String>> listAvds() async {
   final home = Platform.environment['HOME'] ?? '';
   final avdDir = Directory('$home/.android/avd');
   if (!await avdDir.exists()) return [];
- 
+
   final avds = <String>[];
-  
+
   await for (var entity in avdDir.list()) {
     if (entity is File && entity.path.endsWith('.ini')) {
       final name = entity.uri.pathSegments.last.replaceAll('.ini', '');
@@ -41,7 +41,7 @@ Future<String?> promptAvdSelection(List<String> avds) async {
 /// Launches the given AVD with optional flags
 Future<void> launchAvd(String? name, {List<String>? extraArgs}) async {
   final shell = Shell();
-  
+
   if (name == null) {
     final avds = await listAvds();
     if (avds.isEmpty) {
@@ -51,7 +51,7 @@ Future<void> launchAvd(String? name, {List<String>? extraArgs}) async {
     name = await promptAvdSelection(avds);
     if (name == null) return;
   }
-    
+
   print('🚀 Launching AVD "$name"...');
 
   final args = [
