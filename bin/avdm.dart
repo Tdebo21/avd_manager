@@ -4,6 +4,7 @@ import 'package:avd_manager/commands/create.dart';
 import 'package:avd_manager/commands/delete.dart';
 import 'package:avd_manager/commands/launch.dart' as launch_cmd;
 import 'package:avd_manager/commands/list.dart';
+import 'package:avd_manager/src/version.dart';
 
 void main(List<String> args) async {
   final createParser = ArgParser()
@@ -54,7 +55,8 @@ void main(List<String> args) async {
 
   // Handle --version flag FIRST (before checking other flags)
   if (results['version'] as bool) {
-    print('avd_manager version 1.0.0');
+    final version = getVersion();
+    print('avd_manager version $version');
     return;
   }
 
@@ -68,18 +70,6 @@ void main(List<String> args) async {
     print('No command provided. Use --help for usage information.');
     return;
   }
-
-  // Handle --help flag
-  if (results['help'] as bool) {
-    print('AVD Manager - Manage Android Virtual Devices');
-    print('');
-    print('Usage: avdm <command> [arguments]');
-    print('');
-    print('Global options:');
-    print(parser.usage);
-    return;
-  }
-
   // Handle commands
   switch (results.command!.name) {
     case 'launch':

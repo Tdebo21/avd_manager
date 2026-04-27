@@ -54,8 +54,6 @@ avdm --version
 - `avdm create` – Create a new AVD
 - `avdm launch` – Start a virtual device
 - `avdm delete` – Remove an AVD
-- `avdm --help - get help
+- `avdm --help` - Get help
 
 See full command docs in the sidebar.
-
----

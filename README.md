@@ -64,21 +64,23 @@ dart pub global activate --source path .
 avdm <command> [options]
 ```
 
-# 📋 Available Commands
+### 📋 Available Commands
 
-Command Description
-list List all AVDs with optional sort/filter
-create Create a new AVD from a system image
-patch Patch an existing AVD (config changes)
-launch Launch a specific AVD
-delete Delete a specific AVD
-help Show help Options
+| Command  | Description                             |
+| -------- | --------------------------------------- |
+| `list`   | List all AVDs with optional sort/filter |
+| `create` | Create a new AVD from a system image    |
+| `patch`  | Patch an existing AVD (config changes)  |
+| `launch` | Launch a specific AVD                   |
+| `delete` | Delete a specific AVD                   |
+| `help`   | Show help                               |
 
-# 🔧 Options for list
+### 🔧 Options for `list`
 
-Flag Description Example
---sort Sort AVDs by name or size --sort size
---min-size Only show AVDs larger than given size --min-size 1GB
+| Flag         | Description                           | Example          |
+| ------------ | ------------------------------------- | ---------------- |
+| `--sort`     | Sort AVDs by `name` or `size`         | `--sort size`    |
+| `--min-size` | Only show AVDs larger than given size | `--min-size 1GB` |
 
 # Usage Examples
 
