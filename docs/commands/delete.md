@@ -1,4 +1,3 @@
-````markdown
 # 🗑 Delete AVD
 
 The `delete` command removes an AVD from your system permanently.
@@ -11,11 +10,9 @@ This operation **cannot be undone**.
 
 ```bash
 avdm delete <avd_name>
-```
-
+````
 ## ✅ Example
 
 ```bash
 avdm delete Pixel_34
 ```
-````

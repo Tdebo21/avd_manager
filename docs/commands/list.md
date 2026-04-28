@@ -1,4 +1,3 @@
-````markdown
 # 📋 List AVDs
 
 The `list` command shows all available Android Virtual Devices (AVDs) on your system.
@@ -7,7 +6,7 @@ The `list` command shows all available Android Virtual Devices (AVDs) on your sy
 
 ```bash
 avdm list [--sort name|size] [--min-size 1GB]
-```
+````
 
 ## 🏷 Options
 
@@ -25,10 +24,8 @@ avdm list
 # List and sort by size
 avdm list --sort size
 
-# List only AVDs > 2GB
+# List only AVDs >= 2GB
 avdm list --min-size 2GB
 
 # List and sort by name
 avdm list --sort name
-```
-````

@@ -1,4 +1,3 @@
-````markdown
 # 📱 avdm - AVD Manager CLI
 
 A lightweight DART CLI tool for managing Android Virtual Devices with ease.
@@ -23,7 +22,7 @@ A lightweight DART CLI tool for managing Android Virtual Devices with ease.
 
 ```bash
 # Install from pub.dev
-dart pub global activate avd_manager
+dart pub global activate avdm
 
 # Verify installation
 avdm --version
@@ -33,7 +32,7 @@ avdm --version
 
 ```powershell
 # Using pub.dev
-dart pub global activate avd_manager
+dart pub global activate avdm
 
 # Add Dart global bin to PATH if not already done:
 # %APPDATA%\Pub\Cache\bin
@@ -46,7 +45,7 @@ avdm --version
 
 ```bash
 # Using pub.dev
-dart pub global activate avd_manager
+dart pub global activate avdm
 
 # Add Dart global bin to PATH (usually automatic, but verify):
 # ~/.pub-cache/bin
@@ -92,4 +91,3 @@ avdm list --sort name
 # Filter by minimum size
 avdm list --min-size 1GB
 ```
-````
