@@ -1,3 +1,4 @@
+```markdown
 - Getting Started
   - [Home](README.md)
 - Commands
@@ -8,3 +9,4 @@
   - **Links**
   - [![GitHub](https://img.shields.io/badge/GitHub-avd_manager-blue)](https://github.com/Tdebo21/avd_manager)
   - [![Pub.dev](https://img.shields.io/badge/Pub.dev-avd_manager-blue)](https://pub.dev/packages/avd_manager)
+```

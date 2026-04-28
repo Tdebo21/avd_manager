@@ -14,7 +14,7 @@ Built for developers who want a faster, scriptable, and more minimal alternative
 ## 🚀 Features
 
 - ✨ Create and manage AVDs programmatically
-- 🔍 List available AVDs and their configurations
+- 🔍 List available AVDs
 - 🔧 Launch AVDs with custom options
 - 📋 Delete and clean up unused AVDs
 - 📦 Show disk usage per AVD
@@ -49,7 +49,7 @@ dart pub global activate --source path .
 
 > This makes avdm available globally as a command.
 >
-> If you previously installed `avdm`, refresh the global install with:
+> If you previously installed the executable `avdm`, refresh the global install with:
 
 ```bash
 dart pub global deactivate avdm
