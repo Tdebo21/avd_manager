@@ -74,6 +74,10 @@ void main(List<String> args) async {
   switch (results.command!.name) {
     case 'launch':
       final cmd = results.command!;
+      if (cmd['help'] as bool) {
+        print('Usage: avdm launch <avd_name> [options]\n${launchParser.usage}');
+        return;
+      }
       final name = cmd.rest.isNotEmpty ? cmd.rest[0] : null;
       final extraArgs = <String>[];
       List<String> emulatorArgs = [];

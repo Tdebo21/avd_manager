@@ -8,7 +8,8 @@ version: 1.0.0
 # author: Tdebo21
 repository: https://github.com/Tdebo21/avd_manager
 homepage: https://Tdebo21.github.io/avd_manager
-issue_tracker: https://github.com/Tdebo21/avd_manager/issues
+issue_tracker: https://github.com/Tdebo21/avd_manager/
+documentation: https://github.com/Tdebo21/avd_manager
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
