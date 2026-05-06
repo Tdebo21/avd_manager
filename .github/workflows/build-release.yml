@@ -1,72 +1,71 @@
 name: Build and Create Release
 
 on:
-push:
-tags:
-- 'v*' # Trigger on version tags (v1.0.0, v1.1.0, etc.)
+  push:
+    tags:
+      - "v*" # Trigger on version tags (v1.0.0, v1.1.0, etc.)
 
 jobs:
-build:
-name: Build ${{ matrix.os }}
-runs-on: ${{ matrix.os }}
+  build:
+    name: Build ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            output-name: avdm-linux
+            asset-name: avdm-linux
+          - os: windows-latest
+            output-name: avdm-windows.exe
+            asset-name: avdm-windows.exe
+          - os: macos-latest
+            output-name: avdm-macos
+            asset-name: avdm-macos
 
-strategy:
-matrix:
-os: [ubuntu-latest, windows-latest, macos-latest]
-include:
-- os: ubuntu-latest
-output-name: avdm-linux
-asset-name: avdm-linux
-- os: windows-latest
-output-name: avdm-windows.exe
-asset-name: avdm-windows.exe
-- os: macos-latest
-output-name: avdm-macos
-asset-name: avdm-macos
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-steps:
-- name: Checkout code
-uses: actions/checkout@v4
+      - name: Setup Dart SDK
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
 
-- name: Setup Dart SDK
-uses: dart-lang/setup-dart@v1
-with:
-sdk: stable
+      - name: Get dependencies
+        run: dart pub get
 
-- name: Get dependencies
-run: dart pub get
+      - name: Build executable
+        run: dart compile exe bin/avdm.dart -o ${{ matrix.output-name }}
 
-- name: Build executable
-run: dart compile exe bin/avdm.dart -o ${{ matrix.output-name }}
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.os }}-build
+          path: ${{ matrix.output-name }}
 
-- name: Upload artifact
-uses: actions/upload-artifact@v3
-with:
-name: ${{ matrix.os }}-build
-path: ${{ matrix.output-name }}
+  release:
+    name: Create GitHub Release
+    needs: build
+    runs-on: ubuntu-latest
 
-release:
-name: Create GitHub Release
-needs: build
-runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-steps:
-- name: Checkout code
-uses: actions/checkout@v4
+      - name: Download all artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: artifacts
 
-- name: Download all artifacts
-uses: actions/download-artifact@v3
-with:
-path: artifacts
-
-- name: Create Release
-uses: softprops/action-gh-release@v1
-with:
-files: |
-artifacts/ubuntu-latest-build/avdm-linux
-artifacts/windows-latest-build/avdm-windows.exe
-artifacts/macos-latest-build/avdm-macos
-draft: false
-prerelease: false
-env:
-GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            artifacts/ubuntu-latest-build/avdm-linux
+            artifacts/windows-latest-build/avdm-windows.exe
+            artifacts/macos-latest-build/avdm-macos
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

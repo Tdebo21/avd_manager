@@ -1,3 +1,8 @@
+![AVD Manager CLI](https://img.shields.io/badge/Project-AVD_Manager_CLI-3ddc84?style=for-the-badge&logo=android)
+![Version](https://img.shields.io/badge/Version-v1.0.0-3ddc84?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-3ddc84?style=for-the-badge)
+![Downloads](https://img.shields.io/badge/Downloads-1k+-3ddc84?style=for-the-badge)
+![Last Update](https://img.shields.io/badge/Last_Update-Today-3ddc84?style=for-the-badge)
 [![CI](https://github.com/Tdebo21/avd_manager/actions/workflows/ci.yml/badge.svg)](https://github.com/Tdebo21/avd_manager/actions)
 [![pub package](https://img.shields.io/pub/v/avd_manager.svg)](https://pub.dev/packages/avd_manager)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-%E2%98%95-yellow)](https://buymeacoffee.com/guimbobabag)
@@ -13,26 +18,34 @@ Built for developers who want a faster, scriptable, and more minimal alternative
 
 ## 🚀 Features
 
-- ✨ Create and manage AVDs programmatically
-- 🔍 List available AVDs and their configurations
+- ✨ Create and manage Android Virtual Devices with ease
+- 🔍 List all available AVDs and their configurations
 - 🔧 Launch AVDs with custom options
-- 📋 Delete and clean up unused AVDs
+- 📋 Delete and clean up unused or outdated AVDs
 - 📦 Show disk usage per AVD
 - 📊 Sort AVDs by name or size
 - 📏 Filter AVDs by minimum size (e.g. `--min-size 2GB`)
 - ⚡ Lightweight & fast (written in Dart)
+- No GUI required
 
 ---
 
 ## 📦 Installation
 
-> Ensure you have the Dart SDK installed. If not, install it from https://dart.dev/get-dart
+**Option 1: Via Pub.dev (requires Dart SDK)**
 
 ### Prerequisites
+
+> Ensure you have the Dart SDK installed. If not, install it from https://dart.dev/get-dart
 
 - **Dart SDK** 3.0 or higher ([Install Dart](https://dart.dev/get-dart))
 - **Android SDK** with emulator tools ([Install Android Studio](https://developer.android.com/studio))
 - **Java JDK** 11 or higher
+
+```bash
+dart pub global activate avd_manager
+avdm --help
+```
 
 ### 1. Clone the repo
 
@@ -57,6 +70,10 @@ dart pub global activate --source path .
 ```
 
 ---
+
+**Option 2: Download Binary (no Dart Required)**
+
+> Optionally, you can install **AVD Manager CLI Tool** by downloading the binary from the releases page.
 
 ## 🛠 Usage
 
@@ -128,7 +145,7 @@ avdm create miniTestPhone --device "pixel" --api 30 --abi arm64-v8a
 
 > On Apple Silicon, the tool now defaults `--abi` to `arm64-v8a` when not provided. Use `--abi x86` or `--abi x86_64` only if you have Intel system images installed.
 
-# Prompt-based selection:
+# Launch AVD with prompt-based selection:
 
 ```bash
 avdm launch

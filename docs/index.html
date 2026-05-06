@@ -8,6 +8,8 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css"
     />
+    <link rel="icon" href="assets/favicon.png" type="image/png" />
+    <link rel="stylesheet" href="theme.css" />
     <style>
       :root {
         --primary-color: #007bff;
@@ -23,18 +25,38 @@
     </style>
   </head>
   <body>
-    <div id="app">Loading...</div>
+    <div id="app"></div>
+    <div id="theme-toggle">🌗 Toggle Theme</div>
+    <script>
+      const toggle = document.getElementById("theme-toggle");
+      const currentTheme = localStorage.getItem("theme");
+
+      if (currentTheme) {
+        document.documentElement.setAttribute("data-theme", currentTheme);
+      }
+
+      toggle.addEventListener("click", () => {
+        const theme =
+          document.documentElement.getAttribute("data-theme") === "dark"
+            ? "light"
+            : "dark";
+
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
+      });
+    </script>
     <script>
       window.$docsify = {
-        name: "avdm CLI",
+        name: "AVD Manager (avdm) CLI",
         repo: "https://github.com/Tdebo21/avd_manager",
         loadSidebar: true,
         sidebar: "_sidebar.md",
+        gettingStarted: "getting-started.md",
         subMaxLevel: 2, // Shows nested items
         sidebarDisplayLevel: 1, // Sidebar visibility
         homepage: "README.md",
         loadNavbar: false,
-        coverpage: false,
+        coverpage: true,
         auto2top: true,
         themeColor: "#007bff",
       };
