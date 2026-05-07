@@ -1,0 +1,16 @@
+{
+  "name": "avd-manager-cli",
+  "version": "1.0.0",
+  "bin": {
+    "avdm": "index.js"
+  },
+  "files": [
+    "index.js",
+    "bin/"
+  ],
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ]
+}

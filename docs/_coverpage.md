@@ -1,4 +1,4 @@
-![AVD Manager CLI Logo](assets/logo.png)
+![Logo](./assets/logo.png)
 
 # AVD Manager CLI
 
