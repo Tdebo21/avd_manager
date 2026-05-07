@@ -1,5 +1,4 @@
-![AVD Manager CLI Banner](assets/avdmbanner.png)
-
+![AVD Manager CLI Banner](./assets/avdmbanner.png)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-%E2%98%95-yellow)](https://buymeacoffee.com/guimbobabag)
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/Tdebo21?label=Sponsor&style=social)](https://github.com/sponsors/Tdebo21)
 
@@ -22,6 +21,9 @@ You can install **AVD Manager CLI** using your preferred package manager, from P
 ```bash
 # Example installation using Homebrew (macOS)
 brew install avd_manager
+
+# Get help
+avdm --help
 ```
 
 - **Installing from Pub.dev**

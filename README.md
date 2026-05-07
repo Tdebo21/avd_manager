@@ -1,8 +1,6 @@
 ![AVD Manager CLI](https://img.shields.io/badge/Project-AVD_Manager_CLI-3ddc84?style=for-the-badge&logo=android)
 ![Version](https://img.shields.io/badge/Version-v1.0.0-3ddc84?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-3ddc84?style=for-the-badge)
-![Downloads](https://img.shields.io/badge/Downloads-1k+-3ddc84?style=for-the-badge)
-![Last Update](https://img.shields.io/badge/Last_Update-Today-3ddc84?style=for-the-badge)
 [![CI](https://github.com/Tdebo21/avd_manager/actions/workflows/ci.yml/badge.svg)](https://github.com/Tdebo21/avd_manager/actions)
 [![pub package](https://img.shields.io/pub/v/avd_manager.svg)](https://pub.dev/packages/avd_manager)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-%E2%98%95-yellow)](https://buymeacoffee.com/guimbobabag)

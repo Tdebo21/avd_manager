@@ -26,12 +26,20 @@ You can install AVD Manager CLI globally using npm:
 npm install -g avd_manager
 ```
 
-Using Homebrew (macOS):
-
-# Tap (add) Homebrew repository
+Or clone the repository manually:
 
 ```bash
-brew tap Tdebo21/avd_manager https://github.com/Tdebo21/homebrew-avd_manager
+git clone https://github.com/Tdbo21/avd_manager.git
+cd avd_manager
+npm install
+```
+
+Alternatively, using Homebrew (macOS):
+
+# Tap Homebrew repository
+
+```bash
+brew tap Tdebo21/avd_manager
 ```
 
 # Install the tool
@@ -50,14 +58,6 @@ avdm --help
 
 ```bash
 brew uninstall avd_manager
-```
-
-Or clone the repository manually:
-
-```bash
-git clone https://github.com/Tdbo21/avd_manager.git
-cd avd_manager
-npm install
 ```
 
 ## 🚀 First Run
