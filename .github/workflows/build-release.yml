@@ -69,3 +69,23 @@ jobs:
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  update-homebrew:
+    name: Update Homebrew Formula
+    needs: release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Homebrew update
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            // This creates an issue reminder to update the Homebrew formula with the new version and SHA256
+            const { data: issue } = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Update Homebrew formula for version ${process.env.GITHUB_REF.replace("refs/tags/v", "")}`,
+              body: `A new release has been created for version ${process.env.GITHUB_REF.replace("refs/tags/v", "")}. Please update the Homebrew formula with the new version and the correct SHA256 checksum for the new release.`
+            });
+            console.log("Remember to update the Homebrew formula with new SHA256");

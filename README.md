@@ -1,10 +1,12 @@
 ![AVD Manager CLI](https://img.shields.io/badge/Project-AVD_Manager_CLI-3ddc84?style=for-the-badge&logo=android)
-![Version](https://img.shields.io/badge/Version-v1.0.0-3ddc84?style=for-the-badge)
-![License](https://img.shields.io/badge/License-MIT-3ddc84?style=for-the-badge)
+[![npm version](https://badge.fury.io/js/avd-manager-cli.svg)](https://badge.fury.io/js/avd-manager-cli)
+[![downloads](https://img.shields.io/npm/dm/avd-manager-cli.svg)](https://www.npmjs.com/package/avd-manager-cli)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Last Updated](https://img.shields.io/github/last-commit/Tdebo21/avd_manager.svg)](https://github.com/Tdebo21/avd_manager/commits)
 [![CI](https://github.com/Tdebo21/avd_manager/actions/workflows/ci.yml/badge.svg)](https://github.com/Tdebo21/avd_manager/actions)
 [![pub package](https://img.shields.io/pub/v/avd_manager.svg)](https://pub.dev/packages/avd_manager)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-%E2%98%95-yellow)](https://buymeacoffee.com/guimbobabag)
-[![GitHub Sponsors](https://img.shields.io/github/sponsors/Tdebo21?label=Sponsor&style=social)](https://github.com/sponsors/Tdebo21)
+[![Sponsor](https://img.shields.io/badge/sponsor-GitHub-blue)](https://github.com/sponsors/Tdebo21)
 
 # 📱 avdm - AVD Manager CLI Tool
 
@@ -243,9 +245,9 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and release notes.
 
 If you found this project useful, consider sponsoring it to support further development!
 
-💖 Sponsor on GitHub https://github.com/sponsors/Tdebo21
+💖 Sponsor on GitHub: [![Sponsor](https://img.shields.io/badge/sponsor-GitHub-blue)](https://github.com/sponsors/Tdebo21)
 
-Or buy me a coffee: https://www.buymeacoffee.com/guimbobabag
+Or buy me a coffee: [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-%E2%98%95-yellow)](https://buymeacoffee.com/guimbobabag)
 
 # ✨ Author
 

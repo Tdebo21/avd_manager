@@ -23,19 +23,21 @@
           sans-serif;
       }
     </style>
+    <!-- Prism for Syntax Highlighting and Copy Button -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.css"
+    />
   </head>
   <body>
-    <p id="check">
-      _sidebar exists?
-      <script>
-        fetch("./_sidebar.md").then(
-          (r) =>
-            (document.getElementById("check").innerText = r.ok
-              ? "_sidebar found"
-              : "_sidebar missing"),
-        );
-      </script>
-    </p>
     <div id="app"></div>
     <div id="theme-toggle">🌗 Toggle Theme</div>
     <script>
@@ -56,6 +58,7 @@
         localStorage.setItem("theme", theme);
       });
     </script>
+    <!-- Docsify Configuration -->
     <script>
       window.$docsify = {
         name: "AVD Manager (avdm) CLI",
@@ -64,14 +67,39 @@
         alias: { "/.*/_sidebar.md": "/_sidebar.md" },
         homepage: "README.md",
         coverpage: true,
-        // auto2top: true,
         subMaxLevel: 2,
         sidebarDisplayLevel: 1,
         search: true,
         themeColor: "#007bff",
+        notFoundPage: "404.html",
+        auto2top: true,
+        maxLevel: 3,
+        // Code highlighting
+        highlight: {
+          style: "atom-one-dark",
+        },
+        // Plugins
+        plugins: [
+          function (hook, vm) {
+            hook.doneEach(function () {
+              // Re-initialize Prism after content loads
+              if (window.Prism) {
+                Prism.highlightAll();
+              }
+            });
+          },
+        ],
       };
     </script>
     <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+    <!-- Prism Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+    <!-- Emoji plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
+    <!-- Zoom image plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
   </body>
 </html>

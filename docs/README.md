@@ -1,10 +1,13 @@
-![AVD Manager CLI Banner](./assets/avdmbanner.png)
+![AVD Manager CLI Banner](./assets/banner-light.png)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-%E2%98%95-yellow)](https://buymeacoffee.com/guimbobabag)
-[![GitHub Sponsors](https://img.shields.io/github/sponsors/Tdebo21?label=Sponsor&style=social)](https://github.com/sponsors/Tdebo21)
+[![Sponsor](https://img.shields.io/badge/sponsor-GitHub-brightgreen)](https://github.com/sponsors/Tdebo21)
+[![downloads](https://img.shields.io/npm/dm/avd-manager-cli.svg)](https://www.npmjs.com/package/avd-manager-cli)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![npm version](https://badge.fury.io/js/avd-manager-cli.svg)](https://badge.fury.io/js/avd-manager-cli)
 
-# 📱 avdm - AVD Manager CLI
+# Welcome :tada: to 📱 AVD Manager CLI
 
-A lightweight DART CLI tool for managing Android Virtual Devices with ease.
+A lightweight DART CLI tool for managing Android Virtual Devices with ease and speed.
 
 ## Features
 
@@ -13,6 +16,8 @@ A lightweight DART CLI tool for managing Android Virtual Devices with ease.
 - 🔧 Launch AVDs with custom options
 - 📋 Delete and clean up unused AVDs
 - 🎯 Cross-platform support (macOS, Windows, Linux)
+
+- :heart: Open source
 
 ## 📦 Installation
 
@@ -70,8 +75,8 @@ dart pub global activate avdm_manager
 avdm --version
 ```
 
-- **Installing from GitHub Releases (Binaries)**
-- Users without Dart SDK can download executable from the releases page, add to PATH.
+- **Installing from GitHub Releases (Binaries)** -
+  Users without Dart SDK can download executable from the releases page, add to PATH.
 
 ## 📚 Commands Overview
 
@@ -137,7 +142,7 @@ If you encounter issues:
 
 ## 📝 Changelog
 
-See the full changelog in `CHANGELOG.md` for version history and updates.
+See the full changelog in `CHANGELOG.md` for version history and updates by visiting the GitHub Repository - [![GitHub](https://img.shields.io/badge/GitHub-avd_manager-blue)](https://github.com/Tdebo21/avd_manager)
 
 ## ❤️ Support & Sponsorship
 
@@ -153,4 +158,4 @@ If this tool saves you time or improves your workflow, consider supporting the p
 
 Your support keeps the project growing.
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-%E2%98%95-yellow)](https://buymeacoffee.com/guimbobabag)
-[![GitHub Sponsors](https://img.shields.io/github/sponsors/Tdebo21?label=Sponsor&style=social)](https://github.com/sponsors/Tdebo21)
+[![Sponsor](https://img.shields.io/badge/sponsor-GitHub-blue)](https://github.com/sponsors/Tdebo21)

@@ -67,3 +67,33 @@ a {
   z-index: 999;
   user-select: none;
 }
+/* Customize Prism copy button */
+.prism-toolbar {
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 4px;
+}
+
+.prism-toolbar-item button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.prism-toolbar-item button:hover {
+  background: #0056b3;
+}
+
+/* Code block styling */
+pre {
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  background: #f5f5f5;
+}
+
+code {
+  font-family: "Courier New", monospace;
+}
