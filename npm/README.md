@@ -1,15 +1,8 @@
-````markdown
 # AVD Manager CLI
-
-[![npm version](https://badge.fury.io/js/avd-manager-cli.svg)](https://badge.fury.io/js/avd-manager-cli)
-[![downloads](https://img.shields.io/npm/dm/avd-manager-cli.svg)](https://www.npmjs.com/package/avd-manager-cli)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Welcome to **AVD Manager CLI** — a simple and efficient command-line tool for managing Android Virtual Devices (AVDs) directly from your terminal.
 
 This quick-start guide will help you install, configure, and use the CLI in just a few steps.
-
----
 
 ## 🧩 Prerequisites
 
@@ -20,16 +13,19 @@ Before you begin, make sure you have:
 - **Android SDK tools** (`avdmanager`, `sdkmanager`) available in your PATH
 - **Node.js** (if installing via npm)
 
----
-
 ## Installation
 
 You can install AVD Manager CLI globally using npm:
 
 ```bash
-npm install -g avd_manager
+npm install -g avd-manager-cli
 ```
-````
+
+or
+
+```bash
+npm i avd-manager-cli
+```
 
 Or clone the repository manually:
 
@@ -99,7 +95,3 @@ If you encounter issues:
 ## License
 
 MIT
-
-```
-
-```

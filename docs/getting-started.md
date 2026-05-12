@@ -20,10 +20,12 @@ Before you begin, make sure you have:
 
 ## ⚙️ Installation
 
+### Using npm
+
 You can install AVD Manager CLI globally using npm:
 
 ```bash
-npm install -g avd_manager
+npm install -g avd-manager-cli
 ```
 
 Or clone the repository manually:
@@ -34,30 +36,44 @@ cd avd_manager
 npm install
 ```
 
-Alternatively, using Homebrew (macOS):
+### Using Homebrew
 
-# Tap Homebrew repository
+Alternatively, using Homebrew (macOS users):
+
+### Tap Homebrew repository
 
 ```bash
 brew tap Tdebo21/avd_manager
 ```
 
-# Install the tool
+### Install the tool
 
 ```bash
 brew install avd_manager
 ```
 
-# Use it
+### Use it
 
 ```bash
 avdm --help
 ```
 
-# Uninstall (if needed)
+### To update
+
+```bash
+brew upgrade avd_manager
+```
+
+### Uninstall (if needed)
 
 ```bash
 brew uninstall avd_manager
+```
+
+### Using Dart (pub.dev)
+
+```bash
+dart pub global activate avd_manager
 ```
 
 ## 🚀 First Run

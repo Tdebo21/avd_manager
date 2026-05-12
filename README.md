@@ -1,5 +1,4 @@
-![AVD Manager CLI](https://img.shields.io/badge/Project-AVD_Manager_CLI-3ddc84?style=for-the-badge&logo=android)
-[![npm version](https://badge.fury.io/js/avd-manager-cli.svg)](https://badge.fury.io/js/avd-manager-cli)
+[![npm version](https://img.shields.io/npm/v/avd-manager-cli.svg)](https://www.npmjs.com/package/avd-manager-cli)
 [![downloads](https://img.shields.io/npm/dm/avd-manager-cli.svg)](https://www.npmjs.com/package/avd-manager-cli)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Last Updated](https://img.shields.io/github/last-commit/Tdebo21/avd_manager.svg)](https://github.com/Tdebo21/avd_manager/commits)
@@ -74,6 +73,22 @@ dart pub global activate --source path .
 **Option 2: Download Binary (no Dart Required)**
 
 > Optionally, you can install **AVD Manager CLI Tool** by downloading the binary from the releases page.
+
+**Option 3: Using npm**
+You can install AVD Manager CLI globally using npm:
+
+```bash
+npm install -g avd-manager-cli
+```
+
+**Option 4: Using Homebrew**
+
+```bash
+# Example installation using Homebrew (macOS)
+
+brew tap Tdebo21/avd_manager
+brew install avd_manager
+```
 
 ## 🛠 Usage
 

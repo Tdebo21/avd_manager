@@ -1,7 +1,7 @@
 ![AVD Manager CLI Banner](./assets/banner-light.png)
+[![pub version](https://img.shields.io/pub/v/avd_manager.svg)](https://pub.dev/packages/avd_manager)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-%E2%98%95-yellow)](https://buymeacoffee.com/guimbobabag)
 [![Sponsor](https://img.shields.io/badge/sponsor-GitHub-brightgreen)](https://github.com/sponsors/Tdebo21)
-[![downloads](https://img.shields.io/npm/dm/avd-manager-cli.svg)](https://www.npmjs.com/package/avd-manager-cli)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![npm version](https://badge.fury.io/js/avd-manager-cli.svg)](https://badge.fury.io/js/avd-manager-cli)
 
@@ -16,7 +16,6 @@ A lightweight DART CLI tool for managing Android Virtual Devices with ease and s
 - 🔧 Launch AVDs with custom options
 - 📋 Delete and clean up unused AVDs
 - 🎯 Cross-platform support (macOS, Windows, Linux)
-
 - :heart: Open source
 
 ## 📦 Installation
@@ -25,9 +24,14 @@ You can install **AVD Manager CLI** using your preferred package manager, from P
 
 ```bash
 # Example installation using Homebrew (macOS)
+
+brew tap Tdebo21/avd_manager
 brew install avd_manager
+```
 
 # Get help
+
+```bash
 avdm --help
 ```
 
@@ -73,6 +77,12 @@ dart pub global activate avdm_manager
 
 # Verify installation
 avdm --version
+```
+
+- **Installing using npm**
+
+```bash
+npm install -g avd-manager-cli
 ```
 
 - **Installing from GitHub Releases (Binaries)** -
