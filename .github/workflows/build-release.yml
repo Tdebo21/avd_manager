@@ -4,6 +4,16 @@ on:
   push:
     tags:
       - "v*" # Trigger on version tags (v1.0.0, v1.1.0, etc.)
+      workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run mode'
+        required: false
+        default: 'false'
+      bump:
+        description: 'Version bump type (major, minor, patch)'
+        required: false
+        default: 'patch'
 
 jobs:
   build:
@@ -74,13 +84,13 @@ jobs:
         run: npm install
 
       - name: Generate Changelog & Bump Version
-        if ${{ github.event.inputs.dry_run != 'true' }}
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run != 'true' }}
         id: version
-
         run: |
-        npx standard-version --release-as ${{ github.event.inputs.bump }}
-        VERSION=$(node -p "require('./package.json').version")
-        echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          npx standard-version --release-as ${{ github.event.inputs.bump }}
+          VERSION=$(node -p "require('./package.json').version")
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
 
   update-homebrew:
     name: Update Homebrew Formula
