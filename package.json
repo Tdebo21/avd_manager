@@ -1,0 +1,16 @@
+{
+  "name": "avd_manager",
+  "version": "1.0.4",
+  "description": "A Dart CLI tool for AVD management",
+  "scripts": {
+    "release": "standard-version",
+    "release:minor": "standard-version --release-as minor",
+    "release:major": "standard-version --release-as major",
+    "release:dry-run": "standard-version --dry-run",
+    "version": "node scripts/sync-versions.js && git add pubspec.yaml",
+    "postversion": "git push && git push --tags"
+  },
+  "devDependencies": {
+    "standard-version": "^9.5.0"
+  }
+}
