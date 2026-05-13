@@ -70,6 +70,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Generate Changelog & Bump Version
+        if ${{ github.event.inputs.dry_run != 'true' }}
+        id: version
+
+        run: |
+        npx standard-version --release-as ${{ github.event.inputs.bump }}
+        VERSION=$(node -p "require('./package.json').version")
+        echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
   update-homebrew:
     name: Update Homebrew Formula
     needs: release
