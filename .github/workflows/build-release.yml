@@ -64,10 +64,19 @@ jobs:
     name: Create GitHub Release
     needs: build
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version-manual.outputs.VERSION || steps.version-auto.outputs.VERSION }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git user
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
 
       - name: Download all artifacts
         uses: actions/download-artifact@v4
@@ -113,6 +122,13 @@ jobs:
           VERSION=$(node -p "require('./package.json').version")
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
+      - name: Push version bump and changelog
+        if: ${{ github.event_name == 'workflow_dispatch' && !github.event.inputs.dry_run }}
+        run: |
+          git push --follow-tags origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Dry Run Summary
         if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'true' }}
         run: |
@@ -126,18 +142,79 @@ jobs:
     if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && !github.event.inputs.dry_run) }}
 
     steps:
-      - name: Trigger Homebrew update
-        uses: actions/github-script@v7
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            // This creates an issue reminder to update the Homebrew formula with the new version and SHA256
-            const { data: issue } = await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: `Update Homebrew formula for version ${process.env.GITHUB_REF.replace("refs/tags/v", "")}`,
-              body: `A new release has been created for version ${process.env.GITHUB_REF.replace("refs/tags/v", "")}. Please update the Homebrew formula with the new version and the correct SHA256 checksum for the new release.`
-            });
-            console.log("Remember to update the Homebrew formula with new SHA256");
+          path: artifacts
+
+      - name: Calculate SHA256 checksums
+        id: checksums
+        run: |
+          LINUX_SHA=$(sha256sum artifacts/ubuntu-latest-build/avdm-linux | awk '{print $1}')
+          MACOS_SHA=$(sha256sum artifacts/macos-latest-build/avdm-macos | awk '{print $1}')
+          WINDOWS_SHA=$(sha256sum artifacts/windows-latest-build/avdm-windows.exe | awk '{print $1}')
+          
+          echo "LINUX_SHA=$LINUX_SHA" >> $GITHUB_OUTPUT
+          echo "MACOS_SHA=$MACOS_SHA" >> $GITHUB_OUTPUT
+          echo "WINDOWS_SHA=$WINDOWS_SHA" >> $GITHUB_OUTPUT
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Checkout Homebrew tap repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/homebrew-avd_manager
+          token: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+          path: homebrew-tap
+
+      - name: Configure Git user for Homebrew tap
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+
+      - name: Update Homebrew formula
+        run: |
+          cat > homebrew-tap/Formula/avd_manager.rb << 'EOF'
+          class AvdManager < Formula
+            desc "A Dart-based CLI tool for managing Android Virtual Devices (AVDs)"
+            homepage "https://github.com/${{ github.repository }}"
+            version "${{ steps.version.outputs.VERSION }}"
+
+            on_macos do
+              url "https://github.com/${{ github.repository }}/releases/download/v${{ steps.version.outputs.VERSION }}/avdm-macos"
+              sha256 "${{ steps.checksums.outputs.MACOS_SHA }}"
+            end
+
+            on_linux do
+              url "https://github.com/${{ github.repository }}/releases/download/v${{ steps.version.outputs.VERSION }}/avdm-linux"
+              sha256 "${{ steps.checksums.outputs.LINUX_SHA }}"
+            end
+
+            def install
+              bin.install "avdm-macos" => "avd_manager" if OS.mac?
+              bin.install "avdm-linux" => "avd_manager" if OS.linux?
+            end
+
+            test do
+              system "#{bin}/avd_manager", "--version"
+            end
+          end
+          EOF
+
+      - name: Commit and push formula update
+        run: |
+          cd homebrew-tap
+          git add Formula/avd_manager.rb
+          git commit -m "chore: update avd_manager formula to v${{ steps.version.outputs.VERSION }}"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
 
         
