@@ -4,15 +4,21 @@ on:
   push:
     tags:
       - "v*" # Trigger on version tags (v1.0.0, v1.1.0, etc.)
-      workflow_dispatch:
+  workflow_dispatch:
     inputs:
       dry_run:
-        description: 'Dry run mode'
+        description: 'Dry run mode (validates without creating release)'
         required: false
-        default: 'false'
+        type: boolean
+        default: true
       bump:
         description: 'Version bump type (major, minor, patch)'
         required: false
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
         default: 'patch'
 
 jobs:
@@ -69,6 +75,7 @@ jobs:
           path: artifacts
 
       - name: Create Release
+        if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && !github.event.inputs.dry_run) }}
         uses: softprops/action-gh-release@v1
         with:
           files: |
@@ -83,19 +90,40 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Generate Changelog & Bump Version
+      - name: Generate Changelog & Bump Version (Manual - Dry Run)
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'true' }}
+        id: version-dry
+        run: |
+          npx standard-version --release-as ${{ github.event.inputs.bump }} --dry-run
+          echo "DRY_RUN_COMPLETED=true" >> $GITHUB_OUTPUT
+
+      - name: Generate Changelog & Bump Version (Manual)
         if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run != 'true' }}
-        id: version
+        id: version-manual
         run: |
           npx standard-version --release-as ${{ github.event.inputs.bump }}
           VERSION=$(node -p "require('./package.json').version")
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
+      - name: Generate Changelog & Bump Version (Auto - Push)
+        if: ${{ github.event_name == 'push' }}
+        id: version-auto
+        run: |
+          npx standard-version
+          VERSION=$(node -p "require('./package.json').version")
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Dry Run Summary
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'true' }}
+        run: |
+          echo "✅ Dry run completed successfully!"
+          echo "Run the workflow again with 'Dry run mode' unchecked to create the actual release."
 
   update-homebrew:
     name: Update Homebrew Formula
     needs: release
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && !github.event.inputs.dry_run) }}
 
     steps:
       - name: Trigger Homebrew update
