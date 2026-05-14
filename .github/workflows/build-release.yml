@@ -65,7 +65,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && !github.event.inputs.dry_run) }}
+    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'false') }}
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
       version: ${{ steps.version.outputs.VERSION }}
@@ -143,7 +143,7 @@ jobs:
           echo "DRY_RUN_COMPLETED=true" >> $GITHUB_OUTPUT
 
       - name: Generate Changelog & Bump Version
-        if: ${{ github.event.inputs.dry_run != 'true' }}
+        if: ${{ github.event.inputs.dry_run == 'false' }}
         id: version
         run: |
           npx standard-version --release-as ${{ github.event.inputs.bump }} --skip.tag
@@ -178,7 +178,7 @@ jobs:
     name: Update Homebrew Formula
     needs: [create-release]
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && !github.event.inputs.dry_run) }}
+    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'false') }}
 
     steps:
       - name: Checkout code
@@ -259,7 +259,7 @@ jobs:
     name: Publish to Pub.dev
     needs: [create-release]
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && !github.event.inputs.dry_run) }}
+    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'false') }}
 
     steps:
       - name: Checkout code
