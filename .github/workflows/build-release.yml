@@ -146,14 +146,25 @@ jobs:
         if: ${{ github.event.inputs.dry_run != 'true' }}
         id: version
         run: |
-          npx standard-version --release-as ${{ github.event.inputs.bump }}
+          npx standard-version --release-as ${{ github.event.inputs.bump }} --skip.tag
           VERSION=$(node -p "require('./package.json').version")
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create Git Tag (if not exists)
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if ! git rev-parse "v$VERSION" >/dev/null 2>&1; then
+            git tag -a "v$VERSION" -m "chore(release): $VERSION"
+            git push origin "v$VERSION"
+          else
+            echo "Tag v$VERSION already exists, skipping tag creation"
+          fi
 
       - name: Push version bump and changelog
         if: ${{ github.event.inputs.dry_run != 'true' }}
         run: |
-          git push --follow-tags origin main
+          git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
