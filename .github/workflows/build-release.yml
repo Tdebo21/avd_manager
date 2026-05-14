@@ -110,6 +110,9 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'workflow_dispatch' }}
+    permissions:
+      contents: write
+      pull-requests: read
     outputs:
       version: ${{ steps.version.outputs.VERSION }}
 
