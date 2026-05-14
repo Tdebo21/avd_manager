@@ -3,7 +3,7 @@ name: Build and Create Release
 on:
   push:
     tags:
-      - "v*" # Trigger on version tags (v1.0.0, v1.1.0, etc.)
+      - "v*"
   workflow_dispatch:
     inputs:
       dry_run:
@@ -27,17 +27,14 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
         include:
           - os: ubuntu-latest
             output-name: avdm-linux
-            asset-name: avdm-linux
           - os: windows-latest
             output-name: avdm-windows.exe
-            asset-name: avdm-windows.exe
           - os: macos-latest
             output-name: avdm-macos
-            asset-name: avdm-macos
+      fail-fast: false
 
     steps:
       - name: Checkout code
@@ -60,12 +57,57 @@ jobs:
           name: ${{ matrix.os }}-build
           path: ${{ matrix.output-name }}
 
-  release:
+  create-release:
     name: Create GitHub Release
     needs: build
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && !github.event.inputs.dry_run) }}
     outputs:
-      version: ${{ steps.version-manual.outputs.VERSION || steps.version-auto.outputs.VERSION }}
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+      version: ${{ steps.version.outputs.VERSION }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/v}
+          else
+            VERSION=$(node -p "require('./package.json').version")
+          fi
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            artifacts/ubuntu-latest-build/avdm-linux
+            artifacts/windows-latest-build/avdm-windows.exe
+            artifacts/macos-latest-build/avdm-macos
+          draft: false
+          prerelease: false
+          tag_name: ${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  version-and-changelog:
+    name: Generate Changelog & Bump Version
+    needs: build
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    outputs:
+      version: ${{ steps.version.outputs.VERSION }}
 
     steps:
       - name: Checkout code
@@ -78,66 +120,45 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
 
-      - name: Download all artifacts
-        uses: actions/download-artifact@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          path: artifacts
-
-      - name: Create Release
-        if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && !github.event.inputs.dry_run) }}
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            artifacts/ubuntu-latest-build/avdm-linux
-            artifacts/windows-latest-build/avdm-windows.exe
-            artifacts/macos-latest-build/avdm-macos
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          node-version: 'lts/*'
 
       - name: Install Dependencies
         run: npm install
 
-      - name: Generate Changelog & Bump Version (Manual - Dry Run)
-        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'true' }}
+      - name: Generate Changelog & Bump Version (Dry Run)
+        if: ${{ github.event.inputs.dry_run == 'true' }}
         id: version-dry
         run: |
           npx standard-version --release-as ${{ github.event.inputs.bump }} --dry-run
           echo "DRY_RUN_COMPLETED=true" >> $GITHUB_OUTPUT
 
-      - name: Generate Changelog & Bump Version (Manual)
-        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run != 'true' }}
-        id: version-manual
+      - name: Generate Changelog & Bump Version
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        id: version
         run: |
           npx standard-version --release-as ${{ github.event.inputs.bump }}
           VERSION=$(node -p "require('./package.json').version")
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
-      - name: Generate Changelog & Bump Version (Auto - Push)
-        if: ${{ github.event_name == 'push' }}
-        id: version-auto
-        run: |
-          npx standard-version
-          VERSION=$(node -p "require('./package.json').version")
-          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
-
       - name: Push version bump and changelog
-        if: ${{ github.event_name == 'workflow_dispatch' && !github.event.inputs.dry_run }}
+        if: ${{ github.event.inputs.dry_run != 'true' }}
         run: |
           git push --follow-tags origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Dry Run Summary
-        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'true' }}
+        if: ${{ github.event.inputs.dry_run == 'true' }}
         run: |
           echo "✅ Dry run completed successfully!"
           echo "Run the workflow again with 'Dry run mode' unchecked to create the actual release."
 
   update-homebrew:
     name: Update Homebrew Formula
-    needs: release
+    needs: [create-release]
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && !github.event.inputs.dry_run) }}
 
@@ -156,15 +177,14 @@ jobs:
           LINUX_SHA=$(sha256sum artifacts/ubuntu-latest-build/avdm-linux | awk '{print $1}')
           MACOS_SHA=$(sha256sum artifacts/macos-latest-build/avdm-macos | awk '{print $1}')
           WINDOWS_SHA=$(sha256sum artifacts/windows-latest-build/avdm-windows.exe | awk '{print $1}')
-          
           echo "LINUX_SHA=$LINUX_SHA" >> $GITHUB_OUTPUT
           echo "MACOS_SHA=$MACOS_SHA" >> $GITHUB_OUTPUT
           echo "WINDOWS_SHA=$WINDOWS_SHA" >> $GITHUB_OUTPUT
 
-      - name: Extract version from tag
+      - name: Extract version
         id: version
         run: |
-          VERSION=${GITHUB_REF#refs/tags/v}
+          VERSION=${{ needs.create-release.outputs.version }}
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Checkout Homebrew tap repository
@@ -182,7 +202,7 @@ jobs:
       - name: Update Homebrew formula
         run: |
           cat > homebrew-tap/Formula/avd_manager.rb << 'EOF'
-          class AvdManager < Formula
+          class Avdm < Formula
             desc "A Dart-based CLI tool for managing Android Virtual Devices (AVDs)"
             homepage "https://github.com/${{ github.repository }}"
             version "${{ steps.version.outputs.VERSION }}"
@@ -197,6 +217,8 @@ jobs:
               sha256 "${{ steps.checksums.outputs.LINUX_SHA }}"
             end
 
+            license "MIT"
+            
             def install
               bin.install "avdm-macos" => "avd_manager" if OS.mac?
               bin.install "avdm-linux" => "avd_manager" if OS.linux?
@@ -214,7 +236,28 @@ jobs:
           git add Formula/avd_manager.rb
           git commit -m "chore: update avd_manager formula to v${{ steps.version.outputs.VERSION }}"
           git push origin main
-        env:
-          GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
 
-        
+  publish-to-pubdev:
+    name: Publish to Pub.dev
+    needs: [create-release]
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && !github.event.inputs.dry_run) }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Dart SDK
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Get dependencies
+        run: dart pub get
+
+      - name: Publish to Pub.dev
+        run: dart pub publish --force
+        env:
+          PUB_DEV_TOKEN: ${{ secrets.PUB_DEV_TOKEN }}
+  
+ 
