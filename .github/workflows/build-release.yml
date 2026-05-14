@@ -12,7 +12,7 @@ on:
         description: 'Dry run mode (validates without creating release)'
         required: false
         type: boolean
-        default: true
+        default: false
       bump:
         description: 'Version bump type (major, minor, patch)'
         required: false
