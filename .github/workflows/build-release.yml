@@ -1,5 +1,7 @@
 name: Build and Create Release
-
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  
 on:
   push:
     tags:
@@ -202,7 +204,7 @@ jobs:
       - name: Update Homebrew formula
         run: |
           cat > homebrew-tap/Formula/avd_manager.rb << 'EOF'
-          class Avdm < Formula
+          class AvdManager < Formula
             desc "A Dart-based CLI tool for managing Android Virtual Devices (AVDs)"
             homepage "https://github.com/${{ github.repository }}"
             version "${{ steps.version.outputs.VERSION }}"
@@ -256,7 +258,7 @@ jobs:
         run: dart pub get
 
       - name: Publish to Pub.dev
-        run: dart pub publish --force
+        run: dart pub publish
         env:
           PUB_DEV_TOKEN: ${{ secrets.PUB_DEV_TOKEN }}
   
