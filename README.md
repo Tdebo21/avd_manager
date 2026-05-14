@@ -1,7 +1,7 @@
 [![npm version](https://img.shields.io/npm/v/avd-manager-cli.svg)](https://www.npmjs.com/package/avd-manager-cli)
 [![downloads](https://img.shields.io/npm/dm/avd-manager-cli.svg)](https://www.npmjs.com/package/avd-manager-cli)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Last Updated](https://img.shields.io/github/last-update/Tdebo21/avd_manager.svg)](https://github.com/Tdebo21/avd_manager/commits)
+[![Last Updated](https://img.shields.io/github/last-commit/Tdebo21/avd_manager.svg)](https://github.com/Tdebo21/avd_manager/commits)
 [![CI](https://github.com/Tdebo21/avd_manager/actions/workflows/ci.yml/badge.svg)](https://github.com/Tdebo21/avd_manager/actions)
 [![pub package](https://img.shields.io/pub/v/avd_manager.svg)](https://pub.dev/packages/avd_manager)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-%E2%98%95-yellow)](https://buymeacoffee.com/guimbobabag)
