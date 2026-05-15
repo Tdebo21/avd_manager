@@ -8,26 +8,33 @@ const rootPackageJson = JSON.parse(
 );
 const newVersion = rootPackageJson.version;
 
-console.log(`\n📦 Verifying version sync to ${newVersion}...\n`);
+console.log(`\n📦 Syncing version to ${newVersion}...\n`);
 
-// Verify pubspec.yaml
+// Update pubspec.yaml
 const pubspecPath = path.join(__dirname, "../pubspec.yaml");
-const pubspecContent = fs.readFileSync(pubspecPath, "utf-8");
-const pubspecHasVersion = pubspecContent.includes(`version: ${newVersion}`);
-console.log(
-  `${pubspecHasVersion ? "✅" : "❌"} pubspec.yaml: ${pubspecHasVersion ? `v${newVersion}` : "MISMATCH"}`,
-);
+try {
+  let pubspecContent = fs.readFileSync(pubspecPath, "utf-8");
+  pubspecContent = pubspecContent.replace(
+    /version:\s+[0-9.]+/,
+    `version: ${newVersion}`,
+  );
+  fs.writeFileSync(pubspecPath, pubspecContent, "utf-8");
+  console.log(`✅ Updated pubspec.yaml to v${newVersion}`);
+} catch (error) {
+  console.error(`❌ Failed to update pubspec.yaml:`, error.message);
+  process.exit(1);
+}
 
-// Verify npm/package.json
+// Verify npm/package.json was bumped correctly
 const npmPackageJsonPath = path.join(__dirname, "../npm/package.json");
 const npmPackageJson = JSON.parse(fs.readFileSync(npmPackageJsonPath, "utf-8"));
 const npmHasVersion = npmPackageJson.version === newVersion;
 console.log(
-  `${npmHasVersion ? "✅" : "❌"} npm/package.json: ${npmHasVersion ? `v${newVersion}` : `v${npmPackageJson.version} (MISMATCH)`}`,
+  `${npmHasVersion ? "✅" : "❌"} npm/package.json: v${npmPackageJson.version}`,
 );
 
-if (!pubspecHasVersion || !npmHasVersion) {
-  console.error("\n❌ Version mismatch detected!");
+if (!npmHasVersion) {
+  console.error("\n❌ Version mismatch in npm/package.json!");
   process.exit(1);
 }
 
