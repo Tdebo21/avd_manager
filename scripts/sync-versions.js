@@ -1,39 +1,34 @@
 const fs = require("fs");
 const path = require("path");
 
-try {
-  // Read version from package.json
-  const packageJsonPath = path.join(process.cwd(), "package.json");
-  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
-  const version = packageJson.version;
+// Read the new version from root package.json
+const rootPackageJsonPath = path.join(__dirname, "../package.json");
+const rootPackageJson = JSON.parse(
+  fs.readFileSync(rootPackageJsonPath, "utf-8"),
+);
+const newVersion = rootPackageJson.version;
 
-  if (!version) {
-    throw new Error("No version found in package.json");
-  }
+console.log(`\n📦 Verifying version sync to ${newVersion}...\n`);
 
-  // Update pubspec.yaml
-  const pubspecPath = path.join(process.cwd(), "pubspec.yaml");
+// Verify pubspec.yaml
+const pubspecPath = path.join(__dirname, "../pubspec.yaml");
+const pubspecContent = fs.readFileSync(pubspecPath, "utf-8");
+const pubspecHasVersion = pubspecContent.includes(`version: ${newVersion}`);
+console.log(
+  `${pubspecHasVersion ? "✅" : "❌"} pubspec.yaml: ${pubspecHasVersion ? `v${newVersion}` : "MISMATCH"}`,
+);
 
-  if (!fs.existsSync(pubspecPath)) {
-    throw new Error(`pubspec.yaml not found at ${pubspecPath}`);
-  }
+// Verify npm/package.json
+const npmPackageJsonPath = path.join(__dirname, "../npm/package.json");
+const npmPackageJson = JSON.parse(fs.readFileSync(npmPackageJsonPath, "utf-8"));
+const npmHasVersion = npmPackageJson.version === newVersion;
+console.log(
+  `${npmHasVersion ? "✅" : "❌"} npm/package.json: ${npmHasVersion ? `v${newVersion}` : `v${npmPackageJson.version} (MISMATCH)`}`,
+);
 
-  let pubspec = fs.readFileSync(pubspecPath, "utf8");
-  const originalPubspec = pubspec;
-
-  // Replace version line (handles different spacing)
-  pubspec = pubspec.replace(/^version:\s+.+$/m, `version: ${version}`);
-
-  // Verify the replacement actually happened
-  if (pubspec === originalPubspec) {
-    throw new Error(
-      "Failed to update version in pubspec.yaml - pattern not found",
-    );
-  }
-
-  fs.writeFileSync(pubspecPath, pubspec);
-  console.log(`✓ Synced version to ${version} in pubspec.yaml`);
-} catch (error) {
-  console.error(`✗ Error syncing versions: ${error.message}`);
+if (!pubspecHasVersion || !npmHasVersion) {
+  console.error("\n❌ Version mismatch detected!");
   process.exit(1);
 }
+
+console.log("\n✨ All versions synchronized!\n");

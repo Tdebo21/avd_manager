@@ -10,7 +10,29 @@
     { "type": "chore", "section": "Chores", "hidden": true },
     { "type": "revert", "section": "Reverts", "hidden": false }
   ],
-  "bumpFiles": ["package.json"],
+
+  "bumpFiles": [
+    {
+      "filename": "package.json",
+      "type": "json"
+    },
+    {
+      "filename": "pubspec.yaml",
+      "type": "plain-text",
+      "search": "version: [0-9.]+",
+      "replace": "version: {{version}}"
+    },
+    {
+      "filename": "npm/package.json",
+      "type": "json"
+    }
+  ],
+  "packageFiles": [
+    {
+      "filename": "package.json",
+      "type": "json"
+    }
+  ],
   "scripts": {
     "postbump": "node scripts/sync-versions.js"
   },
