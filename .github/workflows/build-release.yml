@@ -1,7 +1,7 @@
 name: Build and Create Release
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-  
+
 on:
   push:
     tags:
@@ -9,19 +9,19 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: 'Dry run mode (validates without creating release)'
+        description: "Dry run mode (validates without creating release)"
         required: false
         type: boolean
         default: false
       bump:
-        description: 'Version bump type (major, minor, patch)'
+        description: "Version bump type (major, minor, patch)"
         required: false
         type: choice
         options:
           - major
           - minor
           - patch
-        default: 'patch'
+        default: "patch"
 
 jobs:
   build:
@@ -130,7 +130,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version: "lts/*"
+          registry-url: "https://registry.npmjs.org"
 
       - name: Install Dependencies
         run: npm install
@@ -160,6 +161,9 @@ jobs:
           else
             echo "Tag v$VERSION already exists, skipping tag creation"
           fi
+      - name: Sync to pubspec.yaml
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        run: node scripts/sync-versions.js
 
       - name: Push version bump and changelog
         if: ${{ github.event.inputs.dry_run != 'true' }}
@@ -277,5 +281,3 @@ jobs:
         run: dart pub publish
         env:
           PUB_DEV_TOKEN: ${{ secrets.PUB_DEV_TOKEN }}
-  
- 
