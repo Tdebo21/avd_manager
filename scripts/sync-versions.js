@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { execSync } = require("child_process");
 
 // Read the new version from root package.json
 const rootPackageJsonPath = path.join(__dirname, "../package.json");
@@ -14,12 +15,21 @@ console.log(`\n📦 Syncing version to ${newVersion}...\n`);
 const pubspecPath = path.join(__dirname, "../pubspec.yaml");
 try {
   let pubspecContent = fs.readFileSync(pubspecPath, "utf-8");
+  const originalContent = pubspecContent;
   pubspecContent = pubspecContent.replace(
     /version:\s+[0-9.]+/,
     `version: ${newVersion}`,
   );
   fs.writeFileSync(pubspecPath, pubspecContent, "utf-8");
   console.log(`✅ Updated pubspec.yaml to v${newVersion}`);
+
+  // Stage pubspec.yaml for commit
+  try {
+    execSync("git add pubspec.yaml", { stdio: "pipe" });
+    console.log(`✅ Staged pubspec.yaml for commit`);
+  } catch (gitError) {
+    console.warn(`⚠️  Could not stage pubspec.yaml (might be in dry-run mode)`);
+  }
 } catch (error) {
   console.error(`❌ Failed to update pubspec.yaml:`, error.message);
   process.exit(1);
