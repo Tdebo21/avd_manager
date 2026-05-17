@@ -135,11 +135,12 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
-      # - name: Publish to npm
-      #   if: ${{ github.event.inputs.dry_run == 'false' }}
-      #   run: npm publish ./npm
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish to npm
+        if: ${{ github.event.inputs.dry_run == 'false' }}
+        run: npm publish ./npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN}}
+       
 
       - name: Generate Changelog & Bump Version (Dry Run)
         if: ${{ github.event.inputs.dry_run == 'true' }}
@@ -283,9 +284,8 @@ jobs:
         run: dart pub get
 
       - name: Publish to Pub.dev
-        run: |
+        run: dart pub publish --force |
           echo "Publishing version ${{ needs.create-release.outputs.version }} to Pub.dev..."
 
-          echo "y" |dart pub publish
         env:
           PUB_DEV_TOKEN: ${{ secrets.PUB_DEV_TOKEN }}
