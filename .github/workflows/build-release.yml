@@ -135,13 +135,7 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
-      - name: Publish to npm
-        if: ${{ github.event.inputs.dry_run == 'false' }}
-        run: npm publish ./npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN}}
-       
-
+     
       - name: Generate Changelog & Bump Version (Dry Run)
         if: ${{ github.event.inputs.dry_run == 'true' }}
         id: version-dry
