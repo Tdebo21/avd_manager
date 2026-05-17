@@ -27,7 +27,7 @@
     }
   ],
   "scripts": {
-    "postbump": "node scripts/sync-versions.js"
+    "postbump": "node scripts/sync-versions.js && git add pubspec.yaml package-lock.json"
   },
 
   "releaseCommitMessageFormat": "chore(release): {{currentTag}}",
