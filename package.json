@@ -1,6 +1,6 @@
 {
   "name": "avd_manager",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A Dart CLI tool for AVD management",
   "scripts": {
     "release": "standard-version",
