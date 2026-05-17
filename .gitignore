@@ -13,7 +13,7 @@ pubspec.lock
 dist/
 build/
 *.o
-*.exe
+
 
 # IDE settings
 .idea/
