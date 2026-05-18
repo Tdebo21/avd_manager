@@ -33,5 +33,6 @@
   "releaseCommitMessageFormat": "chore(release): {{currentTag}}",
   "commitUrlFormat": "https://github.com/Tdebo21/avd_manager/commit/{{hash}}",
   "compareUrlFormat": "https://github.com/Tdebo21/avd_manager/compare/{{previousTag}}...{{currentTag}}",
-  "issueUrlFormat": "https://github.com/Tdebo21/avd_manager/issues/{{id}}"
+  "issueUrlFormat": "https://github.com/Tdebo21/avd_manager/issues/{{id}}",
+  "changelog": "conventional-changelog -p conventionalcommits -i CHANGELOG.md -s"
 }
