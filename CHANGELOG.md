@@ -1,3 +1,13 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [1.0.11](https://github.com/Tdebo21/avd_manager/compare/v1.0.10...v1.0.11) (2026-05-18)
+
+
+### Documentation
+
+* regenerate changelog from git history ([ffb05e5](https://github.com/Tdebo21/avd_manager/commit/ffb05e591bfbfbc56e7d9021ba3c51e3bafb6154))
 
 ## [1.0.10](https://github.com/Tdebo21/avd_manager/compare/v1.0.9...v1.0.10) (2026-05-17)
 
