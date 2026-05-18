@@ -1,6 +1,6 @@
 {
   "name": "avd-manager-cli",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "license": "MIT",
   "description": "A command-line tool to manage Android Virtual Devices (AVDs) with ease.",
   "bin": {
