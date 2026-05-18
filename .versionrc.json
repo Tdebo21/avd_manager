@@ -27,12 +27,15 @@
     }
   ],
   "scripts": {
-    "postbump": "node scripts/sync-versions.js && git add pubspec.yaml package-lock.json"
+    "postbump": "node scripts/sync-versions.js && git add pubspec.yaml package-lock.json && git commit --amend --no-edit"
   },
 
   "releaseCommitMessageFormat": "chore(release): {{currentTag}}",
-  "commitUrlFormat": "https://github.com/Tdebo21/avd_manager/commit/{{hash}}",
-  "compareUrlFormat": "https://github.com/Tdebo21/avd_manager/compare/{{previousTag}}...{{currentTag}}",
-  "issueUrlFormat": "https://github.com/Tdebo21/avd_manager/issues/{{id}}",
-  "changelog": "conventional-changelog -p conventionalcommits -i CHANGELOG.md -s"
+  "commitUrlFormat": "{{host}}/{{owner}}/{{repository}}/commit/{{hash}}",
+  "compareUrlFormat": "{{host}}/{{owner}}/{{repository}}/compare/{{previousTag}}...{{currentTag}}",
+  "issueUrlFormat": "{{host}}/{{owner}}/{{repository}}/issues/{{id}}",
+  "changelog": "conventional-changelog -p conventionalcommits -i CHANGELOG.md -s -k node_modules/conventional-changelog-conventionalcommits",
+  "changelogPreset": {
+    "name": "conventionalcommits"
+  }
 }
