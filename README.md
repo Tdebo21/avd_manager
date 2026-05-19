@@ -1,4 +1,4 @@
-[![npm version](https://img.shields.io/npm/v/avd-manager-cli.svg)](https://www.npmjs.com/package/avd-manager-cli)
+[![npm version](https://img.shields.io/npm/v/avd_manager.svg)](https://www.npmjs.com/package/avd_manager)
 [![downloads](https://img.shields.io/npm/dm/avd-manager-cli.svg)](https://www.npmjs.com/package/avd-manager-cli)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Last Updated](https://img.shields.io/github/last-commit/Tdebo21/avd_manager.svg)](https://github.com/Tdebo21/avd_manager/commits)
@@ -252,7 +252,7 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 
 ## Changelog
 
-See [CHANGELOG.md](CHANGELOG.md) for version history and release notes.
+See [CHANGELOG.md](https://github.com/Tdebo21/avd_manager/blob/main/CHANGELOG.md) for version history and release notes.
 
 ---
 
