@@ -6,7 +6,13 @@
     "release": "standard-version",
     "release:minor": "standard-version --release-as minor",
     "release:major": "standard-version --release-as major",
-    "release:dry-run": "standard-version --dry-run"
+    "release:patch": "standard-version --release-as patch",
+    "release:dry-run:standard": "standard-version --dry-run",
+    "release:dry-run:npm": "npm publish --dry-run",
+    "release:prepare": "npx standard-version --release-as patch",
+    "release:verify": "git log --oneline -5 && git tag -l | tail -5",
+    "release:push": "git push --follow-tags origin main",
+    "release:publish": "npm publish"
   },
   "devDependencies": {
     "conventional-changelog": "^7.2.0",
