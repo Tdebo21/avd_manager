@@ -1,6 +1,6 @@
 {
   "name": "avd_manager",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "A Dart CLI tool for AVD management",
   "scripts": {
     "release:patch": "standard-version --release-as patch && git push --follow-tags origin main && npm publish",
