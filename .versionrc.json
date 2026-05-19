@@ -1,8 +1,4 @@
 {
-  "scripts": {
-    "postbump": "node scripts/sync-versions.js && git add pubspec.yaml package-lock.json && git commit --amend --no-edit"
-  },
-  "preset": "conventionalcommits",
   "types": [
     { "type": "feat", "section": "Features", "hidden": false },
     { "type": "fix", "section": "Bug Fixes", "hidden": false },
@@ -30,6 +26,9 @@
       "type": "json"
     }
   ],
+  "scripts": {
+    "postbump": "node scripts/sync-versions.js && git add pubspec.yaml package-lock.json && git commit --amend --no-edit"
+  },
   "releaseCommitMessageFormat": "chore(release): {{currentTag}}",
   "commitUrlFormat": "{{host}}/{{owner}}/{{repository}}/commit/{{hash}}",
   "compareUrlFormat": "{{host}}/{{owner}}/{{repository}}/compare/{{previousTag}}...{{currentTag}}",
