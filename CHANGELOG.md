@@ -1,4 +1,18 @@
+# Changelog
+
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [1.0.13](https://github.com/Tdebo21/avd_manager/compare/v1.0.12...v1.0.13) (2026-05-19)
+
+
+### Chores
+
+* configure changelog to include chore commits ([0a287d1](https://github.com/Tdebo21/avd_manager/commit/0a287d1979992473f8999b88be9c26a259e5a8e1))
+* fix changelog preset configuration ([3e72fb4](https://github.com/Tdebo21/avd_manager/commit/3e72fb48637075d5e38abf54f059aa0668cd3590))
+* remove title from the chanlog and adjust headers section ([6e116e1](https://github.com/Tdebo21/avd_manager/commit/6e116e16c47f90809f124a14c332678e6cc4e256))
+* simplify version config ([aa44f24](https://github.com/Tdebo21/avd_manager/commit/aa44f246ed0f6527e3414dca8756c24dce4b016c))
+* update release scripts ([167cb1a](https://github.com/Tdebo21/avd_manager/commit/167cb1a6b8a406e8351836e10aa980da82389062))
+* update version configs ([199ae75](https://github.com/Tdebo21/avd_manager/commit/199ae75e645446cefbbb0c4a6786d99c3cc8bc5c))
 
 ## [1.0.12](https://github.com/Tdebo21/avd_manager/compare/v1.0.10...v1.0.12) (2026-05-18)
 
